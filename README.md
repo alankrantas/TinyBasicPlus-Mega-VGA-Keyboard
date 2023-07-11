@@ -1,4 +1,4 @@
-# TinyBasicPlus 8-bit Home Computer on Arduino Mega 2560 and Uno 
+# TinyBasic Plus Home Computer on Arduino Mega 2560 and Uno 
 
 > Working in progress!
 
