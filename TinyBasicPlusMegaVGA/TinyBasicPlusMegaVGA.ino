@@ -1,18 +1,21 @@
-#define TINY_BASIC_MEMORY 1024 * 6
+#define TINY_BASIC_MEMORY 1024 * 6  // kb
 #define BAUDRATE 9600
 
-#include <VGAX.h>
+#define VGA_SCREEN_X_OFFSET 8  // pixels
+#define VGA_SCREEN_Y_OFFSET 0  // pixels
+#define CURSOR_BLINK_PERIOD 500  // ms
+#define MAIN_TEXT_COLOR 3  // 1, 2 or 3
+#define CURSOR_COLOR 2  // 1, 2 or 3
 
-#define VGA_SCREEN_X_OFFSET 8
-#define VGA_SCREEN_Y_OFFSET 0
-#define VGA_SCREEN_VISIBLE_WIDTH VGAX_WIDTH - 1
-#define VGA_SCREEN_VISIBLE_HEIGHT VGAX_HEIGHT - 1
-#define CURSOR_BLINK_PERIOD 500
+#define FNT_NANOFONT_SPACE_WIDTH 2  // change it for wider space
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <VGAX.h>
 
 //font generated from BITFONZI - by Sandro Maffiodo
 #define FNT_NANOFONT_HEIGHT 6
 #define FNT_NANOFONT_MAX_WIDTH 5
-#define FNT_NANOFONT_SPACE_WIDTH 2
 #define FNT_NANOFONT_SYMBOLS_COUNT 95
 
 //data size=570 bytes
@@ -1067,6 +1070,9 @@ static const byte asciiWidth[94] = {
   3,  // "}"
   3   // "~"
 };
+
+#define VGA_SCREEN_VISIBLE_WIDTH VGAX_WIDTH - 1
+#define VGA_SCREEN_VISIBLE_HEIGHT VGAX_HEIGHT - 1
 
 VGAX vga;
 byte x = VGA_SCREEN_X_OFFSET;
@@ -3106,7 +3112,7 @@ void vgaPrint(byte c) {
       x += (FNT_NANOFONT_SPACE_WIDTH + 1);
       return;
     case 33 ... 126:  // ascii characters
-      vgaPrintAscii(c, x, y, 3);
+      vgaPrintAscii(c, x, y, MAIN_TEXT_COLOR);
       if (x + asciiWidth[c - 33] < VGA_SCREEN_VISIBLE_WIDTH) {
         x += (asciiWidth[c - 33] + 1);
       } else {
@@ -3124,7 +3130,7 @@ void vgaPrintAscii(byte c, byte x, byte y, byte color) {
 void vgaNewLine() {
   x = VGA_SCREEN_X_OFFSET;
   y += (FNT_NANOFONT_HEIGHT + 1);
-  if (y + (FNT_NANOFONT_HEIGHT + 1) >= VGA_SCREEN_VISIBLE_HEIGHT - FNT_NANOFONT_HEIGHT / 2) {
+  if (y + (FNT_NANOFONT_HEIGHT + 1) >= VGA_SCREEN_VISIBLE_HEIGHT) {
     y = VGA_SCREEN_Y_OFFSET;
     vga.clear(0);
   }
