@@ -28,10 +28,10 @@ There's many ways to connect VGA and PS/2 (see the driver repos for details) but
 | Pin | VGA D-SUB 15 | Resistor |
 | --- | --- | --- |
 | GND | GND | |
-| 9 | H-SYNC | 680Ω |
-| 11 | V-SYNC | 680Ω |
-| 30 | GREEN | 470Ω |
-| 31 | BLUE | 470Ω |
+| 9 | H-SYNC | 680 Ω |
+| 11 | V-SYNC | 680 Ω |
+| 30 | GREEN | 470 Ω |
+| 31 | BLUE | 470 Ω |
 
 ![vga](https://github.com/alankrantas/TinyBasicPlus-Mega-VGA-Keyboard/assets/44191076/ee8b55ba-a909-41cc-8aea-ee2244344af0)
 
@@ -59,11 +59,15 @@ I also power the Uno directly using Mega's 5V pin (while the Mega can be powered
 
 ## Explanation for the Two-Board Combination
 
-It is simply not possible to run both VGAX and PS/2 drivers together on the same board without rewrite them, due to both rely on timers for interrupt, dispite the MEGA and Uno are not using the same pins. On AVR boards ```timer0``` by default is used for built-in functions like ```delay``` and ```millis```, and VGAX uses ```timer0```, ```timer1``` and ```timer2```. Whereas VGAX does provide alternative functions like ```vga.millis()``` to avoid issues, the PS/2 drivers (Rob uses [PS2Keyboard](https://github.com/PaulStoffregen/PS2Keyboard)) still calls the original ```millis``` and thus break both driver timings.
+It is simply not possible to run both VGAX and PS/2 drivers together on the same board without rewritting them, for both rely on the same interrupt timers despite not using the same pins. On AVR boards ```timer0``` by default is used by built-in functions like ```delay``` and ```millis```, and VGAX uses ```timer0```, ```timer1``` and ```timer2```. While VGAX does provide alternative functions like ```vga.millis()``` to avoid issues, and the MEGA does have extra timers, the PS/2 drivers (Rob uses [PS2Keyboard](https://github.com/PaulStoffregen/PS2Keyboard) which is the predecessor of PS2KeyAdvanced) still calls the original ```millis``` and thus break timings for both drivers.
+
+### VGA Pixel Offset
+
+The MEGA script has X and Y offset settings you can adjust. As the author of the VGAX driver stated, the "screen" may not align properly to the VGA monitor. Also the only way to change the "resolution" is to modify the value in the VGAX header file.
 
 ### TinyBasic Memory Usage
 
-By default the TinyBasic script use up all available memories on the board. I change it to use 6K so a little more than 4K is available when the TinyBlasic runtime is up and running.
+By default the TinyBasic script use up all available memories on the board. I change it to use 6K so a little less than 5K would be available for TinyBasic code and variables.
 
 I haven't test if other functionalities (buzzers, SD card, etc) will work. Later I'll try to remove checks for ESP boards since they are not necessary on MEGA.
 
@@ -71,8 +75,8 @@ I haven't test if other functionalities (buzzers, SD card, etc) will work. Later
 
 I have the Uno's keyboard script and the VGAX printing function to only accept the following characters:
 
-* Enter (ASCII code 13)
-* Space (ASCII code 32)
+* ```Enter``` (ASCII code 13)
+* ```Space``` (ASCII code 32)
 * Characters of ASCII code 33~126
 
 The TinyBasic script did support backspace, although it does not appear to work properly. Rob also implemented to use ESC to clear the screen, but I'll have to figure out how to reset the TinyBasic prompt at the same time.
