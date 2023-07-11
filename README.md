@@ -1,6 +1,6 @@
-# TinyBasic Plus Home Computer on Arduino Mega 2560 and Uno 
+# Tiny BASIC 8-bit Home Computer on Arduino with VGA and PS/2 Support
 
-> Working in progress!
+![IMG_3193](https://github.com/alankrantas/TinyBasicPlus-Mega-VGA-Keyboard/assets/44191076/fdf786c4-3ac2-4538-80a5-27d75ed2461a)
 
 My version of remaking Rob Cai's [Arduino Basic PC With VGA Output](https://www.instructables.com/Arduino-Basic-PC-With-VGA-Output/), which is to use two Arduino AVR boards to create a 8-bit home computer running the [TinyBasic](https://en.wikipedia.org/wiki/Tiny_BASIC) runtime with VGA video output and PS/2 keyboard input.
 
