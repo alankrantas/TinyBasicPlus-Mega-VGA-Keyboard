@@ -59,7 +59,7 @@ I also power the Uno directly using Mega's 5V pin (while the Mega can be powered
 
 ## Explanation for the Two-Board Combination
 
-It is not possible to run both VGAX and PS/2 drivers together on the same board due to they both rely on timers for interrupt, dispite the MEGA and Uno are not using the same pins. On AVR boards ```timer0``` by default is used for built-in functions like ```delay``` and ```millis```, and VGAX uses ```timer0```, ```timer1``` and ```timer2```. Whereas VGAX does provide alternative functions like ```vga.millis()``` to avoid issues, the PS/2 drivers (Rob uses [PS2Keyboard](https://github.com/PaulStoffregen/PS2Keyboard)) still calls the original ```millis``` and thus break both driver timings.
+It is simply not possible to run both VGAX and PS/2 drivers together on the same board without rewrite them, due to both rely on timers for interrupt, dispite the MEGA and Uno are not using the same pins. On AVR boards ```timer0``` by default is used for built-in functions like ```delay``` and ```millis```, and VGAX uses ```timer0```, ```timer1``` and ```timer2```. Whereas VGAX does provide alternative functions like ```vga.millis()``` to avoid issues, the PS/2 drivers (Rob uses [PS2Keyboard](https://github.com/PaulStoffregen/PS2Keyboard)) still calls the original ```millis``` and thus break both driver timings.
 
 ### TinyBasic Memory Usage
 
@@ -82,7 +82,7 @@ The TinyBasic script did support backspace, although it does not appear to work 
 The VGAX, in order to save memory on Uno, only uses two colors so there are four colors available:
 
 | Color value | Binary value | Effect |
-| --- | --- |
+| --- | --- | --- |
 | ```0``` | ```00``` | Black |
 | ```1``` | ```01``` | Color 1 (pin 30) |
 | ```2``` | ```10``` | Color 2 (pin 31) |
